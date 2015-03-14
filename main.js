@@ -3,6 +3,8 @@
 
 var DEFAULT_ROUTE = 'one';
 var template = document.querySelector('#t');
+var mvChildId = "mainviewChild";
+var currentMenuDisplayed;
 
 template.pages = [
   {name: 'MainView', hash: 'one'},
@@ -18,14 +20,47 @@ template.menu = [
 
 template.addEventListener('template-bound', function(e) {
   this.route = this.route || DEFAULT_ROUTE; // Select initial route.
+  currentMenuDisplayed = template.menu[0].hash;
+  document.querySelector('#mainview').insertAdjacentHTML('afterbegin','<div id="mainviewChild">Menu 1</div>');
 });
 
 template.menuItemSelected = function(e) {
-  console.log(e.target.attributes.hash.nodeValue);
-  template.route = 'one';
+  var menuNode = e.target.attributes.hash.nodeValue;
+  console.log(menuNode);
+  template.route = DEFAULT_ROUTE;
   document.querySelector('#scaffold').closeDrawer();
-  var mainview = document.querySelector('#mainview');
-  mainview.insertAdjacentHTML('afterbegin','<p>hello</p>');
+
+
+  if (menuNode != currentMenuDisplayed) {
+
+    if (menuNode == this.menu[0].hash) {
+
+      createMenuFrag(mvChildId, menuNode);
+
+    } else if (menuNode == this.menu[1].hash) {
+
+      createMenuFrag(mvChildId, menuNode);
+
+    } else if (menuNode == this.menu[2].hash) {
+
+      createMenuFrag(mvChildId, menuNode);
+    }
+    currentMenuDisplayed = menuNode;
+  }
+
 };
 
 })();
+
+function createMenuFrag(id, node){
+
+  var mainview = document.querySelector('#mainview');
+  var mainviewChild = document.querySelector('#' + id);
+  var menufrag = document.createDocumentFragment();
+  var menu = document.createElement('p');
+  menu.id = id;
+  menu.textContent = node;
+  menufrag.appendChild(menu);
+  mainview.replaceChild(menufrag,mainviewChild);
+
+}
