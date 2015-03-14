@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+<script src="bower_components/webcomponentsjs/webcomponents.min.js"></script>
+<link rel="stylesheet" href="css/styles.css" shim-shadowdom>
+
+<link rel="import" href="bower_components/core-animated-pages/core-animated-pages.html">
+<link rel="import" href="bower_components/core-animated-pages/transitions/slide-from-right.html">
+<link rel="import" href="bower_components/core-animated-pages/transitions/cross-fade.html">
+<link rel="import" href="bower_components/core-toolbar/core-toolbar.html">
+<link rel="import" href="bower_components/core-paper-scaffold/core-paper-scaffold.html">
+<link rel="import" href="bower_components/core-icon-button/core-icon-button.html">
+<link rel="import" href="bower_components/core-icon/core-icon.html">
+<link rel="import" href="bower_components/core-menu/core-menu.html">
+<link rel="import" href="bower_components/paper-item/paper-item.html">
+<link rel="import" href="bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="bower_components/paper-tabs/paper-tab.html">
+<link rel="import" href="bower_components/flatiron-director/flatiron-director.html">
+<link rel="import" href="bower_components/core-ajax/core-ajax.html">
+<script src="main.js" async></script>
+</head>
+
+<body unresolved fullbleed>
+
+<template is="auto-binding" id="t">
+
+  <!-- Route controller. -->
+  <flatiron-director route="{{route}}" autoHash></flatiron-director>
+
+  <core-paper-scaffold id="scaffold" responsiveWidth="1100px">
+
+    <nav>
+      <core-menu id="menu" valueattr="hash" on-tap="{{menuItemSelected}}" selectedModel="{{selectedItem}}">
+        <template repeat="{{option, m in menu}}">
+          <paper-item hash="{{option.hash}}" noink>
+              {{option.name}}
+          </paper-item>
+        </template>
+      </core-menu>
+    </nav>
+
+    <core-toolbar id="titlebar" tool flex>
+      <paper-tabs id ="tabs" valueattr="hash" selected="{{route}}" flex>
+        <template repeat="{{page, i in pages}}">
+          <paper-tab hash="{{page.hash}}">{{page.name}}</paper-tab>
+        </template>
+      </paper-tabs>
+    </core-toolbar>
+
+    <div layout horizontal center-center fit>
+      <core-animated-pages id="pages" selected="{{route}}" valueattr="hash"
+                           transitions="slide-from-right">
+        <section hash="one" layout vertical center-center>
+            <div id="mainview">MainView</div>
+        </section>
+
+        <section hash="two" layout vertical center-center>
+          <div id="secondview1">SecondaryView 1</div>
+        </section>
+
+        <section hash="three" layout vertical center-center>
+          <div id="secondview2">SecondaryView 2</div>
+        </section>
+
+      </core-animated-pages>
+    </div>
+
+  </core-paper-scaffold>
+
+</template>
+
+</body>
+</html>
