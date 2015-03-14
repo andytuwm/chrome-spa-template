@@ -32,15 +32,15 @@ template.menuItemSelected = function(e) {
 
     if (menuNode == this.menu[0].hash) {
 
-      createMenuFrag(mvChildId, this.route, menuNode);
+      createMenuFrag(menuNode);
 
     } else if (menuNode == this.menu[1].hash) {
 
-      createMenuFrag(mvChildId, this.route, menuNode);
+      createMenuFrag(menuNode);
 
     } else if (menuNode == this.menu[2].hash) {
 
-      createMenuFrag(mvChildId, this.route, menuNode);
+      createMenuFrag(menuNode);
     }
     currentMenuDisplayed = menuNode;
   }
@@ -49,28 +49,33 @@ template.menuItemSelected = function(e) {
   document.querySelector('#scaffold').closeDrawer();
 };
 
-})();
-
-function createMenuFrag(id, route, node){
+// Functions
+function createMenuFrag(node){
   var mainview = document.querySelector('#mainview');
-  var mainviewChild = document.querySelector('#' + id);
+  var mainviewChild = document.querySelector('#' + mvChildId);
 
   var menufrag = document.createDocumentFragment();
   var menu = document.createElement('p');
-  menu.id = id;
+  menu.id = mvChildId;
   menu.textContent = node;
   menufrag.appendChild(menu);
 
-  if(route == 'one') {
-    mainviewChild.classList.add('fade-out');
+  fadeReplace(menufrag,mainviewChild,mainview);
+}
+
+function fadeReplace(frag, child, parent) {
+  if(template.route == 'one') {
+    child.classList.add('fade-out');
     setTimeout( function() {
-      mainview.replaceChild(menufrag,mainviewChild);
-      mainviewChild = document.querySelector('#' + id);
-      mainviewChild.classList.add('fade-in');
+      parent.replaceChild(frag,child);
+      child = document.querySelector('#' + mvChildId);
+      child.classList.add('fade-in');
     },275);
   } else {
-    mainview.replaceChild(menufrag,mainviewChild);
-    mainviewChild = document.querySelector('#' + id);
-    mainviewChild.classList.add('fade-in');
+    parent.replaceChild(frag,child);
+    child = document.querySelector('#' + mvChildId);
+    child.classList.add('fade-in');
   }
 }
+
+})();
