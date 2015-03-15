@@ -23,7 +23,7 @@
 </head>
 
 <body unresolved fullbleed>
-
+<!-- Wrapping the body in an autobinding template tag enables Polymer data binding -->
 <template is="auto-binding" id="t">
 
   <!-- Route controller. -->
@@ -31,6 +31,7 @@
 
   <core-paper-scaffold id="scaffold" responsiveWidth="1100px">
 
+    <!-- Elements inside nav tag go inside the drawer panel of the scaffold -->
     <nav>
       <core-menu id="menu" valueattr="hash" on-tap="{{menuItemSelected}}" selected="0">
         <template repeat="{{option, m in menu}}">
@@ -41,6 +42,7 @@
       </core-menu>
     </nav>
 
+    <!-- Tabs -->
     <core-toolbar id="titlebar" tool flex>
       <paper-tabs id ="tabs" valueattr="hash" selected="{{route}}" flex>
         <template repeat="{{page, i in pages}}">
@@ -49,6 +51,7 @@
       </paper-tabs>
     </core-toolbar>
 
+    <!-- Body of the app; content goes here -->
     <div layout horizontal center-center fit>
       <core-animated-pages id="pages" selected="{{route}}" valueattr="hash"
                            transitions="slide-from-right">
@@ -60,11 +63,17 @@
         </section>
 
         <section hash="two" layout vertical center-center>
-          <div id="secondview1">SecondaryView 1</div>
+          <div id="secondview1">
+            <!-- placeholder -->
+            SecondaryView 1
+          </div>
         </section>
 
         <section hash="three" layout vertical center-center>
-          <div id="secondview2">SecondaryView 2</div>
+          <div id="secondview2">
+            <!-- placeholder -->
+            SecondaryView 2
+          </div>
         </section>
 
       </core-animated-pages>
