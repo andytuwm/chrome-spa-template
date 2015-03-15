@@ -3,6 +3,7 @@ body {
   font-weight: 300;
 }
 
+/* Dimensions of the animated pages */
 core-animated-pages {
   width: 100%;
   height: 100%;
@@ -10,6 +11,7 @@ core-animated-pages {
   overflow: hidden;
 }
 
+/* CSS for the animated pages */
 core-animated-pages > * {
   border-radius: 5px;
   font-size: 50px;
@@ -17,10 +19,11 @@ core-animated-pages > * {
 }
 
 body /deep/ core-toolbar {
-  background-color: #03a9f4;
-  color: #fff;
+  background-color: #03a9f4; /* toolbar background color */
+  color: #fff; /* toolbar font/icon color*/
 }
 
+/* Menu font color */
 core-menu {
   color: #01579b;
   margin: 0;
@@ -30,12 +33,7 @@ core-menu > paper-item {
   transition: all 300ms ease-in-out;
 }
 
-paper-item a {
-  text-decoration: none;
-  color: currentcolor;
-  margin-left: 5px;
-}
-
+/* highlight when menu item is selected */
 core-menu > paper-item.core-selected {
   background: #e1f5fe;
 }
@@ -47,6 +45,8 @@ core-menu > paper-item.core-selected {
   }
 }
 
+
+/* define behaviour of fade animation*/
 @-webkit-keyframes fadeIn {
   from {
     opacity: 0;
@@ -55,13 +55,12 @@ core-menu > paper-item.core-selected {
     opacity: 1;
   }
 }
-
 @-webkit-keyframes fadeOut {
   to {
     opacity: 0;
   }
 }
-
+/* add these classes to fade something in/out. */
 .fade-in {
   -webkit-animation: fadeIn 0.4s ease-in 1;
 }
