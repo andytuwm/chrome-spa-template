@@ -21,7 +21,8 @@ template.menu = [
 template.addEventListener('template-bound', function(e) {
   this.route = this.route || DEFAULT_ROUTE; // Select initial route.
   currentMenuDisplayed = this.menu[0].hash;
-  document.querySelector('#mainview').insertAdjacentHTML('afterbegin','<div id="mainviewChild">Menu 1</div>');
+  //document.querySelector('#mainview').insertAdjacentHTML('afterbegin','<div id="mainviewChild">Menu 1</div>');
+  createMenuFrag(currentMenuDisplayed);
 });
 
 template.menuItemSelected = function(e) {

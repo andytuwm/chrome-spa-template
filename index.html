@@ -32,10 +32,10 @@
   <core-paper-scaffold id="scaffold" responsiveWidth="1100px">
 
     <nav>
-      <core-menu id="menu" valueattr="hash" on-tap="{{menuItemSelected}}" selectedModel="{{selectedItem}}">
+      <core-menu id="menu" valueattr="hash" on-tap="{{menuItemSelected}}" selected="0">
         <template repeat="{{option, m in menu}}">
           <paper-item hash="{{option.hash}}" noink>
-              {{option.name}}
+            {{option.name}}
           </paper-item>
         </template>
       </core-menu>
@@ -53,7 +53,10 @@
       <core-animated-pages id="pages" selected="{{route}}" valueattr="hash"
                            transitions="slide-from-right">
         <section hash="one" layout vertical center-center>
-            <div id="mainview"></div>
+            <div id="mainview">
+              <!-- this child div is a placeholder -->
+              <div id="mainviewChild"></div>
+            </div>
         </section>
 
         <section hash="two" layout vertical center-center>
