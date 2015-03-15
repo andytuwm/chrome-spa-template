@@ -5,7 +5,6 @@ var DEFAULT_ROUTE = 'one';
 var template = document.querySelector('#t');
 var mvChildId = "mainviewChild";
 var currentMenuDisplayed;
-var fragmentcache_1, fragmentcache_2, fragmentcache_3;
 
 template.pages = [
   {name: 'MainView', hash: 'one'},
@@ -14,9 +13,9 @@ template.pages = [
 ];
 
 template.menu = [
-  {name: 'Menu 1', hash: 'menu1'},
-  {name: 'Menu 2', hash: 'menu2'},
-  {name: 'Menu 3', hash: 'menu3'}
+  {name: 'Menu 1', hash: 'menu1', fcache: null},
+  {name: 'Menu 2', hash: 'menu2', fcache: null},
+  {name: 'Menu 3', hash: 'menu3', fcache: null}
 ];
 
 // Initializing function that runs once the template has been prepped for databinding
@@ -34,24 +33,23 @@ template.menuItemSelected = function(e) {
 
   // If selected item is the same one, no need to change the DOM
   if (menuNode != currentMenuDisplayed) {
-
     // If selected menu item does not have a fragment, create and append.
     // Customize each view accordingly
-    if (menuNode == this.menu[0].hash && typeof fragmentcache_1 === 'undefined') {
-      fragmentcache_1 = createMenuFrag(menuNode);
-    } else if (menuNode == this.menu[1].hash && typeof fragmentcache_2 === 'undefined') {
-      fragmentcache_2 = createMenuFrag(menuNode);
-    } else if (menuNode == this.menu[2].hash && typeof fragmentcache_3 === 'undefined') {
-      fragmentcache_3 = createMenuFrag(menuNode);
+    if (menuNode == this.menu[0].hash && this.menu[0].fcache === null) {
+      this.menu[0].fcache = createMenuFrag(menuNode);
+    } else if (menuNode == this.menu[1].hash && this.menu[1].fcache === null) {
+      this.menu[1].fcache = createMenuFrag(menuNode);
+    } else if (menuNode == this.menu[2].hash && this.menu[2].fcache === null) {
+      this.menu[2].fcache = createMenuFrag(menuNode);
     }
     // If the selected menu item already has a fragment, load the fragment instead.
     // Once again, customize each view aaccordingly.
     else if (menuNode == this.menu[0].hash) {
-      loadFrag(fragmentcache_1.cloneNode(true));
+      loadFrag(this.menu[0].fcache.cloneNode(true));
     } else if (menuNode == this.menu[1].hash) {
-      loadFrag(fragmentcache_2.cloneNode(true));
+      loadFrag(this.menu[1].fcache.cloneNode(true));
     } else if (menuNode == this.menu[2].hash) {
-      loadFrag(fragmentcache_3.cloneNode(true));
+      loadFrag(this.menu[2].fcache.cloneNode(true));
     }
     currentMenuDisplayed = menuNode;
   }
