@@ -5,6 +5,7 @@ var DEFAULT_ROUTE = 'one';
 var template = document.querySelector('#t');
 var mvChildId = "mainviewChild";
 var currentMenuDisplayed;
+var fragmentcache_1, fragmentcache_2, fragmentcache_3;
 
 template.pages = [
   {name: 'MainView', hash: 'one'},
@@ -21,8 +22,7 @@ template.menu = [
 template.addEventListener('template-bound', function(e) {
   this.route = this.route || DEFAULT_ROUTE; // Select initial route.
   currentMenuDisplayed = this.menu[0].hash;
-  //document.querySelector('#mainview').insertAdjacentHTML('afterbegin','<div id="mainviewChild">Menu 1</div>');
-  createMenuFrag(currentMenuDisplayed);
+  createMenuFrag(currentMenuDisplayed); // Initialize Main View
 });
 
 template.menuItemSelected = function(e) {
@@ -31,17 +31,30 @@ template.menuItemSelected = function(e) {
 
   if (menuNode != currentMenuDisplayed) {
 
-    if (menuNode == this.menu[0].hash) {
+    if (menuNode == this.menu[0].hash && typeof fragmentcache_1 === 'undefined') {
 
-      createMenuFrag(menuNode);
+      fragmentcache_1 = createMenuFrag(menuNode);
+
+    } else if (menuNode == this.menu[1].hash && typeof fragmentcache_2 === 'undefined') {
+
+      fragmentcache_2 = createMenuFrag(menuNode);
+
+    } else if (menuNode == this.menu[2].hash && typeof fragmentcache_3 === 'undefined') {
+
+      fragmentcache_3 = createMenuFrag(menuNode);
+
+    } else if (menuNode == this.menu[0].hash) {
+
+      loadFrag(fragmentcache_1.cloneNode(true));
 
     } else if (menuNode == this.menu[1].hash) {
 
-      createMenuFrag(menuNode);
+      loadFrag(fragmentcache_2.cloneNode(true));
 
     } else if (menuNode == this.menu[2].hash) {
 
-      createMenuFrag(menuNode);
+      loadFrag(fragmentcache_3.cloneNode(true));
+
     }
     currentMenuDisplayed = menuNode;
   }
@@ -51,17 +64,18 @@ template.menuItemSelected = function(e) {
 };
 
 // Functions
-function createMenuFrag(node){
+function createMenuFrag(menuNode){
   var mainview = document.querySelector('#mainview');
   var mainviewChild = document.querySelector('#' + mvChildId);
 
   var menufrag = document.createDocumentFragment();
   var menu = document.createElement('p');
   menu.id = mvChildId;
-  menu.textContent = node;
+  menu.textContent = menuNode;
   menufrag.appendChild(menu);
-
   fadeReplace(menufrag,mainviewChild,mainview);
+
+  return menufrag.cloneNode(true);
 }
 
 function fadeReplace(frag, child, parent) {
@@ -77,6 +91,12 @@ function fadeReplace(frag, child, parent) {
     child = document.querySelector('#' + mvChildId);
     child.classList.add('fade-in');
   }
+}
+
+function loadFrag(frag) {
+  var mainview = document.querySelector('#mainview');
+  var mainviewChild = document.querySelector('#' + mvChildId);
+  fadeReplace(frag,mainviewChild,mainview);
 }
 
 })();
