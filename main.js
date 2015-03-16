@@ -4,13 +4,15 @@
 var DEFAULT_ROUTE = 'one';
 var template = document.getElementById('t');
 var mvChildId = "mainview";
+var view2 = 'secondview';
+var view3 = 'thirdview';
 var currentMenuDisplayed;
 var menutemplates;
 
 template.pages = [
-  {name: 'MainView', hash: 'one'},
-  {name: 'SecondaryView 1', hash: 'two'},
-  {name: 'SecondaryView 2', hash: 'three'}
+  {name: 'MainView', hash: 'one', id: mvChildId, temp:''},
+  {name: 'SecondaryView 1', hash: 'two', id: view2, temp:'SecondaryView 1'},
+  {name: 'SecondaryView 2', hash: 'three', id: view3, temp:'SecondaryView 2'}
 ];
 
 // Template for the menu. If update to UI is not needed, can clone the fragment

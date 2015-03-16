@@ -53,25 +53,15 @@
     <div layout horizontal center-center fit>
       <core-animated-pages id="pages" selected="{{route}}" valueattr="hash"
                            transitions="slide-from-right">
-        <section hash="one" layout vertical center-center>
-            <div id="mainview">
+
+        <template repeat="{{page, i in pages}}">
+          <section hash="{{page.hash}}" layout vertical center-center>
+            <div id="{{page.id}}">
               <!-- placeholder -->
+              <div>{{page.temp}}</div>
             </div>
-        </section>
-
-        <section hash="two" layout vertical center-center>
-          <div id="secondview1">
-            <!-- placeholder -->
-            SecondaryView 1
-          </div>
-        </section>
-
-        <section hash="three" layout vertical center-center>
-          <div id="secondview2">
-            <!-- placeholder -->
-            SecondaryView 2
-          </div>
-        </section>
+          </section>
+        </template>
 
       </core-animated-pages>
     </div>
