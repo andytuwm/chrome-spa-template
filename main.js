@@ -2,9 +2,10 @@
 "use strict";
 
 var DEFAULT_ROUTE = 'one';
-var template = document.querySelector('#t');
+var template = document.getElementById('t');
 var mvChildId = "mainviewChild";
 var currentMenuDisplayed;
+var menutemplates;
 
 template.pages = [
   {name: 'MainView', hash: 'one'},
@@ -12,6 +13,8 @@ template.pages = [
   {name: 'SecondaryView 2', hash: 'three'}
 ];
 
+// Template for the menu. If update to UI is not needed, can clone the fragment
+// into fcache for reuse.
 template.menu = [
   {name: 'Menu 1', hash: 'menu1', fcache: null},
   {name: 'Menu 2', hash: 'menu2', fcache: null},
@@ -19,10 +22,12 @@ template.menu = [
 ];
 
 // Initializing function that runs once the template has been prepped for databinding
-template.addEventListener('template-bound', function(e) {
+template.addEventListener('template-bound', function() {
   this.route = this.route || DEFAULT_ROUTE; // Select initial route.
   currentMenuDisplayed = this.menu[0].hash;
-  createMenuFrag(currentMenuDisplayed); // Initialize Main View
+  var mt = document.getElementById('menutemplates');
+  menutemplates = mt.import; // Initialize a variable to access menutemplates.html
+  loadTemplate(currentMenuDisplayed); // Initialize main view
 });
 
 // Function that runs on menu item click in the scaffold drawer
@@ -33,23 +38,13 @@ template.menuItemSelected = function(e) {
 
   // If selected item is the same one, no need to change the DOM
   if (menuNode != currentMenuDisplayed) {
-    // If selected menu item does not have a fragment, create and append.
-    // Customize each view accordingly
-    if (menuNode == this.menu[0].hash && this.menu[0].fcache === null) {
-      this.menu[0].fcache = createMenuFrag(menuNode);
-    } else if (menuNode == this.menu[1].hash && this.menu[1].fcache === null) {
-      this.menu[1].fcache = createMenuFrag(menuNode);
-    } else if (menuNode == this.menu[2].hash && this.menu[2].fcache === null) {
-      this.menu[2].fcache = createMenuFrag(menuNode);
-    }
-    // If the selected menu item already has a fragment, load the fragment instead.
-    // Once again, customize each view aaccordingly.
-    else if (menuNode == this.menu[0].hash) {
-      loadFrag(this.menu[0].fcache.cloneNode(true));
+    // Load the template UI defined in menutemplates.html
+    if (menuNode == this.menu[0].hash) {
+      loadTemplate(menuNode);
     } else if (menuNode == this.menu[1].hash) {
-      loadFrag(this.menu[1].fcache.cloneNode(true));
+      loadTemplate(menuNode);
     } else if (menuNode == this.menu[2].hash) {
-      loadFrag(this.menu[2].fcache.cloneNode(true));
+      loadTemplate(menuNode);
     }
     currentMenuDisplayed = menuNode;
   }
@@ -60,44 +55,35 @@ template.menuItemSelected = function(e) {
 
 /* Functions */
 
-// Duplicate this function for each menu UI
-function createMenuFrag(menuNode){
-  var mainview = document.querySelector('#mainview');
-  var mainviewChild = document.querySelector('#' + mvChildId);
-
-  // create DOM fragment to manipulate and then append
-  var menufrag = document.createDocumentFragment();
-  var menu = document.createElement('p');
-  menu.id = mvChildId;
-  menu.textContent = menuNode;
-  menufrag.appendChild(menu);
-  fadeReplace(menufrag,mainviewChild,mainview);
-
-  return menufrag.cloneNode(true); // clone the node for reuse
-}
-
 // Handles fade in/out of the mainview menu views
 function fadeReplace(frag, child, parent) {
   if(template.route == 'one') {
     child.classList.add('fade-out'); // fade out
     setTimeout( function() {
       parent.replaceChild(frag,child);
-      child = document.querySelector('#' + mvChildId);
+      child = document.getElementById(mvChildId);
       child.classList.add('fade-in'); // fade in
     },275); // wait 275 ms before replacing to allow fadeout animation (300ms) to run
   } else { // if not on main view, no need for fade out animation
     parent.replaceChild(frag,child);
-    child = document.querySelector('#' + mvChildId);
+    child = document.getElementById(mvChildId);
     child.classList.add('fade-in');
   }
 }
 
-// Duplicate this function for each menu UI as well if certain views require
-// populating data (eg. with xhr)
+// If no need to reload the view, can reuse fragments saved to a variable.
+// When appending/saving, remember to use frag.cloneNode(true);
 function loadFrag(frag) {
-  var mainview = document.querySelector('#mainview');
-  var mainviewChild = document.querySelector('#' + mvChildId);
+  var mainview = document.getElementById('mainview');
+  var mainviewChild = document.getElementById(mvChildId);
   fadeReplace(frag,mainviewChild,mainview);
+}
+
+// Load template view
+function loadTemplate(templateId) {
+  var t = menutemplates.getElementById(templateId);
+  var child = document.getElementById(mvChildId);
+  fadeReplace(document.importNode(t.content,true),child,child.parentNode);
 }
 
 })();
