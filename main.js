@@ -3,7 +3,7 @@
 
 var DEFAULT_ROUTE = 'one';
 var template = document.getElementById('t');
-var mvChildId = "mainviewChild";
+var mvChildId = "mainview";
 var currentMenuDisplayed;
 var menutemplates;
 
@@ -74,9 +74,8 @@ function fadeReplace(frag, child, parent) {
 // If no need to reload the view, can reuse fragments saved to a variable.
 // When appending/saving, remember to use frag.cloneNode(true);
 function loadFrag(frag) {
-  var mainview = document.getElementById('mainview');
-  var mainviewChild = document.getElementById(mvChildId);
-  fadeReplace(frag,mainviewChild,mainview);
+  var child = document.getElementById(mvChildId);
+  fadeReplace(frag,child,child.parentNode);
 }
 
 // Load template view

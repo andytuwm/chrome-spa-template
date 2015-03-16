@@ -1,13 +1,20 @@
-<!-- Build UI for each menu item here. Template id should match the hash in
-     template.menu, and mainviewChild must be included. -->
+<!--
+    Build UI for each menu item here. Template id should match the hash in
+    template.menu
+
+    The inserted DOM should be wrapped around div elements with a consistent
+    id so that templates meant for same view but different UI can be changed
+    on-the-fly (eg. the menu views all have id="mainview", and replace the same
+    div element in the main DOM).
+-->
 <template id="menu1">
-  <p id="mainviewChild">menu1</p>
+  <p id="mainview">menu1</p>
 </template>
 
 <template id="menu2">
-  <p id="mainviewChild">menu2</p>
+  <p id="mainview">menu2</p>
 </template>
 
 <template id="menu3">
-  <p id="mainviewChild">menu3</p>
+  <p id="mainview">menu3</p>
 </template>
