@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
-  "name": "chromeSPA-template",
-  "short_name": "chromeSPA-template",
+  "name": "chrome-spa-template",
+  "short_name": "chrome-spa-template",
   "description": "A template useful for building single page chrome applications",
   "version": "0.0.1",
   "minimum_chrome_version": "36",
@@ -13,7 +13,8 @@
 
   "app": {
     "background": {
-      "scripts": ["background.js"]
+      "scripts": ["background.js"],
+      "persistent": false
     }
   }
 }
