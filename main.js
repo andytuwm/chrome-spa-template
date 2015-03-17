@@ -29,7 +29,7 @@ template.addEventListener('template-bound', function() {
   currentMenuDisplayed = this.menu[0].hash;
   var mt = document.getElementById('menutemplates');
   menutemplates = mt.import; // Initialize a variable to access menutemplates.html
-  loadTemplate(currentMenuDisplayed); // Initialize main view
+  loadTemplate(currentMenuDisplayed,mvChildId); // Initialize main view
 });
 
 // Function that runs on menu item click in the scaffold drawer
@@ -42,11 +42,11 @@ template.menuItemSelected = function(e) {
   if (menuNode != currentMenuDisplayed) {
     // Load the template UI defined in menutemplates.html
     if (menuNode == this.menu[0].hash) {
-      loadTemplate(menuNode);
+      loadTemplate(menuNode,mvChildId);
     } else if (menuNode == this.menu[1].hash) {
-      loadTemplate(menuNode);
+      loadTemplate(menuNode,mvChildId);
     } else if (menuNode == this.menu[2].hash) {
-      loadTemplate(menuNode);
+      loadTemplate(menuNode,mvChildId);
     }
     currentMenuDisplayed = menuNode;
   }
@@ -59,7 +59,7 @@ template.menuItemSelected = function(e) {
 
 // Handles fade in/out of the mainview menu views
 function fadeReplace(frag, child, parent) {
-  if(template.route == 'one') {
+  if(template.route == DEFAULT_ROUTE) {
     child.classList.add('fade-out'); // fade out
     setTimeout( function() {
       parent.replaceChild(frag,child);
@@ -81,9 +81,9 @@ function loadFrag(frag) {
 }
 
 // Load template view
-function loadTemplate(templateId) {
+function loadTemplate(templateId, childId) {
   var t = menutemplates.getElementById(templateId);
-  var child = document.getElementById(mvChildId);
+  var child = document.getElementById(childId);
   fadeReplace(document.importNode(t.content,true),child,child.parentNode);
 }
 
